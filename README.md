@@ -59,7 +59,7 @@ If you wish to just develop locally and not deploy to Netlify, [follow the steps
    cd test2
    ```
 
-4. Rename `.env.example` to `.env.local` and update the following:
+4. Rename `.env.example` to `.env.local` and update the following variables with your own credentials:
 
    ```
    NEXT_PUBLIC_SUPABASE_URL=[INSERT SUPABASE PROJECT URL]
