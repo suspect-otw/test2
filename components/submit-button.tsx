@@ -2,7 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { type ComponentProps } from "react";
-import { useFormStatus } from "react-dom";
+import { useFormStatus } from "@/components/hooks/use-form-status";
+
 
 type Props = ComponentProps<typeof Button> & {
   pendingText?: string;

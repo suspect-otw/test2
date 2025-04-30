@@ -4,7 +4,12 @@ import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { SmtpMessage } from "../smtp-message";
+
+//this page is will be used by me only for demo purposes in the netlify
+//the smtp server will be setted up for demo site
+//so even if you reset or forgot your password the smtp server will be sent it to me
+//this will be for me to create new user if needed
+//and preventing the bad intentions of the users who will try to change the password
 
 export default async function Signup(props: {
   searchParams: Promise<Message>;
@@ -45,7 +50,6 @@ export default async function Signup(props: {
           <FormMessage message={searchParams} />
         </div>
       </form>
-      <SmtpMessage />
     </>
   );
 }
