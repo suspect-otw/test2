@@ -42,7 +42,7 @@ If you wish to just develop locally and not deploy to Netlify, [follow the steps
 
 1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
 
-2. Clone/Download this repo to your machine with git command:
+2. Clone/Download this repo to your machine with these command:
 
    ```bash
    git clone https://github.com/suspect-otw/test2.git
@@ -51,10 +51,6 @@ If you wish to just develop locally and not deploy to Netlify, [follow the steps
 
     ```bash
     gh repo clone suspect-otw/test2
-    ```
-
-    ```bash
-    pnpm create next-app --example with-supabase with-supabase-app
     ```
 
 3. Use `cd` to change into the app's directory

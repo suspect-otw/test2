@@ -6,8 +6,8 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 
 //this page is will be used by me only for demo purposes in the netlify
-//the smtp server will be setted up for demo site
-//so even if you reset or forgot your password the smtp server will be sent it to me
+//the smtp server will be setted up in supabase for demo site
+//so even if you reset or forgot your password for test user in netlify app the smtp server will be sent it to me
 //this will be for me to create new user if needed
 //and preventing the bad intentions of the users who will try to change the password
 
