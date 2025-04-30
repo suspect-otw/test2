@@ -1,5 +1,5 @@
 <a href="https://music-campaign.netlify.app">
-  <img alt="Music Campaign" src="https://music-campaign.netlify.app/logo.png">
+  <img alt="Music Campaign" src="https://github.com/suspect-otw/test2/blob/main/app/logo.png">
   <h1 align="center">Music Campaing</h1>
 </a>
 
@@ -17,10 +17,24 @@
 
 ## Features
 
-- Next & Supabase Auth Project
-  - App Router
-  - SSR
-  - 
+- Next JS & Supabase Auth Project
+  - 1. Login Page
+    - Admin login with email and password.
+  - 2. Dashboard Homepage
+    - Displays a list of all music campaigns.
+    - Admin can perform CRUD operations on each campaign.
+  - 3. Create Campaign
+    -A form where the admin can input:
+    -Campaign Title
+    -Brand Name
+    -Start Date and End Date
+    -Budget
+    -Image Upload(e.g., campaign banner)
+    -Campaign Description
+  - 4. Update Campaign
+    -A form for editing all campaign details (including image and description).
+  -5. Delete Campaign
+    - A delete button for removing a campaign from the system.
 - supabase-ssr. A package to configure Supabase Auth to use cookies
 - Styling with [Tailwind CSS](https://tailwindcss.com)
 - Components with [shadcn/ui](https://ui.shadcn.com/)
