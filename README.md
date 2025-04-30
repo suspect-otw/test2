@@ -47,15 +47,15 @@ If you wish to just develop locally and not deploy to Netlify, [follow the steps
    ```bash
    git clone https://github.com/suspect-otw/test2.git
    ```
-  using GitHub CLI:
+   using GitHub CLI:
 
-   ```bash
-   gh repo clone suspect-otw/test2
-   ```
+    ```bash
+    gh repo clone suspect-otw/test2
+    ```
 
-   ```bash
-   pnpm create next-app --example with-supabase with-supabase-app
-   ```
+    ```bash
+    pnpm create next-app --example with-supabase with-supabase-app
+    ```
 
 3. Use `cd` to change into the app's directory
 
