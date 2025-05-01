@@ -44,6 +44,7 @@ export const deleteCampaign = async (id: string) => {
           .where(eq(campaigns.id, id));
   
         // Revalidate path to update UI
+        revalidatePath('/dashboard/campaigns');
         revalidatePath('/campaigns');
         
         return { success: true, error: null };

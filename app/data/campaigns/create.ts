@@ -45,12 +45,15 @@ export const createCampaign = async (data: CampaignInput) => {
           
           // Process each image
           for (const image of data.images as CampaignImageUpload[]) {
+            // Sanitize filename by replacing spaces with hyphens
+            const sanitizedFileName = image.fileName.replace(/\s+/g, '-');
+            
             // Upload to Supabase storage
             const { data: uploadData, error: uploadError } = await supabase
               .storage
               .from('campaign_images')
               .upload(
-                `${newCampaign.id}/${image.fileName}`, 
+                `${newCampaign.id}/${sanitizedFileName}`, 
                 image.file
               );
   
@@ -63,7 +66,7 @@ export const createCampaign = async (data: CampaignInput) => {
               .insert(campaignImages)
               .values({
                 campaignId: newCampaign.id,
-                fileName: image.fileName,
+                fileName: image.fileName, // Keep the original filename for display
                 filePath: uploadData.path,
                 fileSize: image.fileSize,
                 contentType: image.contentType,
@@ -72,8 +75,9 @@ export const createCampaign = async (data: CampaignInput) => {
         }
   
         // Revalidate path to update UI
+        revalidatePath('/dashboard/campaigns');
         revalidatePath('/campaigns');
-        
+
         return { data: newCampaign.id, error: null };
       });
     } catch (error: any) {

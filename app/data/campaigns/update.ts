@@ -47,12 +47,15 @@ export const updateCampaign = async (id: string, data: CampaignInput) => {
           
           // Process each new image
           for (const image of data.images as CampaignImageUpload[]) {
+            // Sanitize filename by replacing spaces with hyphens
+            const sanitizedFileName = image.fileName.replace(/\s+/g, '-');
+            
             // Upload to Supabase storage
             const { data: uploadData, error: uploadError } = await supabase
               .storage
               .from('campaign_images')
               .upload(
-                `${id}/${image.fileName}`, 
+                `${id}/${sanitizedFileName}`, 
                 image.file
               );
   
@@ -65,7 +68,7 @@ export const updateCampaign = async (id: string, data: CampaignInput) => {
               .insert(campaignImages)
               .values({
                 campaignId: id,
-                fileName: image.fileName,
+                fileName: image.fileName, // Keep the original filename for display
                 filePath: uploadData.path,
                 fileSize: image.fileSize,
                 contentType: image.contentType,
@@ -74,13 +77,12 @@ export const updateCampaign = async (id: string, data: CampaignInput) => {
         }
   
         // Revalidate path to update UI
-        revalidatePath('/campaigns');
-        revalidatePath(`/campaigns/${id}`);
+        revalidatePath('/dashboard/campaigns');
         
-        return { success: true, error: null };
+        return { data: id, error: null };
       });
     } catch (error: any) {
       console.error(`Error updating campaign ${id}:`, error);
-      return { success: false, error: error.message || "Failed to update campaign" };
+      return { data: null, error: error.message || "Failed to update campaign" };
     }
   };
