@@ -19,28 +19,28 @@
 
 ## Features
 
-- Next JS & Supabase Auth Project
-  - 1. Login Page
+- **Next JS & Supabase Auth Project**
+  - **Login Page**
     - Admin login with email and password.
-  - 2. Dashboard Homepage
+  - **Dashboard Homepage**
     - Displays a list of all music campaigns.
     - Admin can perform CRUD operations on each campaign.
-  - 3. Create Campaign
-    -A form where the admin can input:
-    -Campaign Title
-    -Brand Name
-    -Start Date and End Date
-    -Budget
-    -Image Upload(e.g., campaign banner)
-    -Campaign Description
-  - 4. Update Campaign
-    -A form for editing all campaign details (including image and description).
-  -5. Delete Campaign
+  - **Create Campaign**
+    - A form where the admin can input:
+      - Campaign Title
+      - Brand Name
+      - Start Date and End Date
+      - Budget
+      - Image Upload (e.g., campaign banner)
+      - Campaign Description
+  - **Update Campaign**
+    - A form for editing all campaign details (including image and description).
+  - **Delete Campaign**
     - A delete button for removing a campaign from the system.
-- supabase-ssr. A package to configure Supabase Auth to use cookies
-- Styling with [Tailwind CSS](https://tailwindcss.com)
-- Components with [shadcn/ui](https://ui.shadcn.com/)
-- Optional deployment with [Netlify](#deploy-to-netlify)
+- **supabase-ssr**: A package to configure Supabase Auth to use cookies
+- **Styling** with [Tailwind CSS](https://tailwindcss.com)
+- **Components** with [shadcn/ui](https://ui.shadcn.com/)
+- **Optional deployment** with [Netlify](#deploy-to-netlify)
 
 ## Demo
 
