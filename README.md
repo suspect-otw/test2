@@ -1,7 +1,9 @@
+<div align="center">
 <a href="https://music-campaign.netlify.app">
   <img alt="Music Campaign" src="https://github.com/suspect-otw/test2/blob/main/app/logo.png">
   <h1 align="center">Music Campaing</h1>
 </a>
+</div>
 
 <p align="center">
  Simple CRUD and Auth with Supabase and Next JS
