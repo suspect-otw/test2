@@ -24,7 +24,10 @@ interface ImageScrollProps {
 export function ImageScrollModal({ isOpen, onOpenChange, campaignTitle, images }: ImageScrollProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto">
+      <DialogContent 
+        className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
         <DialogHeader>
           <div className="flex items-center justify-between">
             <DialogTitle>Images for {campaignTitle}</DialogTitle>
@@ -36,7 +39,7 @@ export function ImageScrollModal({ isOpen, onOpenChange, campaignTitle, images }
             No images available for this campaign.
           </div>
         ) : (
-          <ScrollArea className="w-full whitespace-nowrap rounded-md border">
+          <ScrollArea className="w-full whitespace-nowrap rounded-md border" onClick={(e) => e.stopPropagation()}>
             <div className="flex w-max space-x-6 p-6">
               {images.map((image) => {
                 const imageUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/campaign_images/${image.filePath}`;

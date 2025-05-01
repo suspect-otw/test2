@@ -61,7 +61,11 @@ export default function DeleteCampaignDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90vh] overflow-y-auto my-5">
+      <DialogContent 
+        className="max-h-[90vh] overflow-y-auto my-5" 
+        onClick={(e) => e.stopPropagation()} 
+        onPointerDownOutside={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>Delete Campaign</DialogTitle>
           <DialogDescription asChild>
@@ -81,14 +85,22 @@ export default function DeleteCampaignDialog({
         <DialogFooter>
           <Button
             variant="outline"
-            onClick={() => onOpenChange(false)}
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              onOpenChange(false);
+            }}
             disabled={isDeleting}
           >
             Cancel
           </Button>
           <Button
             variant="destructive"
-            onClick={handleDelete}
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              handleDelete();
+            }}
             disabled={isDeleting}
           >
             {isDeleting ? "Deleting..." : "Delete"}

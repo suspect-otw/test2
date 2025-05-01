@@ -6,8 +6,10 @@ import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { 
   CampaignImageUpload,
-  CampaignInput 
+  CampaignInput,
+  CampaignWithImages
 } from "@/types/campaign";
+import { sanitizeFileName } from "@/lib/utils";
 
 
 
@@ -45,20 +47,25 @@ export const createCampaign = async (data: CampaignInput) => {
           
           // Process each image
           for (const image of data.images as CampaignImageUpload[]) {
-            // Sanitize filename by replacing spaces with hyphens
-            const sanitizedFileName = image.fileName.replace(/\s+/g, '-');
+            // Sanitize filename to ensure it's storage-compatible
+            const { sanitizedName, error: sanitizeError } = sanitizeFileName(image.fileName);
+            
+            // Handle filename sanitization errors 
+            if (sanitizeError) {
+              throw new Error(`Invalid file name: ${sanitizeError}`);
+            }
             
             // Upload to Supabase storage
             const { data: uploadData, error: uploadError } = await supabase
               .storage
               .from('campaign_images')
               .upload(
-                `${newCampaign.id}/${sanitizedFileName}`, 
+                `${newCampaign.id}/${sanitizedName}`, 
                 image.file
               );
   
             if (uploadError) {
-              throw new Error(`Failed to upload image: ${uploadError.message}`);
+              throw new Error(`Failed to upload image: ${uploadError.message || 'Unknown error'}`);
             }
   
             // Add image record to database
@@ -78,10 +85,11 @@ export const createCampaign = async (data: CampaignInput) => {
         revalidatePath('/dashboard/campaigns');
         revalidatePath('/campaigns');
 
-        return { data: newCampaign.id, error: null };
+        return { data: newCampaign as CampaignWithImages, error: null };
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to create campaign";
       console.error("Error creating campaign:", error);
-      return { data: null, error: error.message || "Failed to create campaign" };
+      return { data: null, error: errorMessage };
     }
   };

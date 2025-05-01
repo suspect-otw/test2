@@ -9,6 +9,7 @@ import {
   CampaignImageUpload, 
   CampaignInput 
 } from "@/types/campaign";
+import { sanitizeFileName } from "@/lib/utils";
 
 
 /**
@@ -47,20 +48,25 @@ export const updateCampaign = async (id: string, data: CampaignInput) => {
           
           // Process each new image
           for (const image of data.images as CampaignImageUpload[]) {
-            // Sanitize filename by replacing spaces with hyphens
-            const sanitizedFileName = image.fileName.replace(/\s+/g, '-');
+            // Sanitize filename to ensure it's storage-compatible
+            const { sanitizedName, error: sanitizeError } = sanitizeFileName(image.fileName);
+            
+            // Handle filename sanitization errors 
+            if (sanitizeError) {
+              throw new Error(`Invalid file name: ${sanitizeError}`);
+            }
             
             // Upload to Supabase storage
             const { data: uploadData, error: uploadError } = await supabase
               .storage
               .from('campaign_images')
               .upload(
-                `${id}/${sanitizedFileName}`, 
+                `${id}/${sanitizedName}`, 
                 image.file
               );
   
             if (uploadError) {
-              throw new Error(`Failed to upload image: ${uploadError.message}`);
+              throw new Error(`Failed to upload image: ${uploadError.message || 'Unknown error'}`);
             }
   
             // Add image record to database
@@ -77,12 +83,13 @@ export const updateCampaign = async (id: string, data: CampaignInput) => {
         }
   
         // Revalidate path to update UI
-        revalidatePath('/dashboard/campaigns');
+        revalidatePath(`/campaigns/${id}`);
         
         return { data: id, error: null };
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to update campaign";
       console.error(`Error updating campaign ${id}:`, error);
-      return { data: null, error: error.message || "Failed to update campaign" };
+      return { data: null, error: errorMessage };
     }
   };

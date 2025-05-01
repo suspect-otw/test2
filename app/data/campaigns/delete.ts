@@ -49,8 +49,9 @@ export const deleteCampaign = async (id: string) => {
         
         return { success: true, error: null };
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to delete campaign";
       console.error(`Error deleting campaign ${id}:`, error);
-      return { success: false, error: error.message || "Failed to delete campaign" };
+      return { success: false, error: errorMessage };
     }
   };

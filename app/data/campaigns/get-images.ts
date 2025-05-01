@@ -29,8 +29,9 @@ export const getCampaignImages = async (campaignId: string) => {
       }, 
       error: null 
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : "Failed to fetch campaign images";
     console.error(`Error fetching images for campaign ${campaignId}:`, error);
-    return { data: null, error: error.message || "Failed to fetch campaign images" };
+    return { data: null, error: errorMessage };
   }
 }; 

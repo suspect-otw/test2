@@ -48,8 +48,9 @@ export const deleteCampaignImage = async (imageId: string) => {
       
       return { success: true, error: null };
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : "Failed to delete image";
     console.error(`Error deleting image ${imageId}:`, error);
-    return { success: false, error: error.message || "Failed to delete image" };
+    return { success: false, error: errorMessage };
   }
 }; 
