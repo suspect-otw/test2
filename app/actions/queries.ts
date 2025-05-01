@@ -5,24 +5,12 @@ import { campaigns, campaignImages } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
-
-// Types
-export type CampaignImage = {
-  file: File;
-  fileName: string;
-  fileSize: number;
-  contentType: string;
-};
-
-export type CampaignInput = {
-  campaignTitle: string;
-  brandName: string;
-  startDate: string | Date;
-  endDate: string | Date;
-  budget: string | number;
-  description?: string;
-  images?: CampaignImage[];
-};
+import { 
+  Campaign, 
+  CampaignWithImages, 
+  CampaignImageUpload, 
+  CampaignInput 
+} from "@/types/campaign";
 
 /**
  * Get all campaigns
@@ -31,7 +19,7 @@ export type CampaignInput = {
 export const getAllCampaigns = async () => {
   try {
     const results = await db.select().from(campaigns);
-    return { data: results, error: null };
+    return { data: results as Campaign[], error: null };
   } catch (error) {
     console.error("Error fetching campaigns:", error);
     return { data: null, error: "Failed to fetch campaigns" };
@@ -63,7 +51,7 @@ export const getCampaignById = async (id: string) => {
       .where(eq(campaignImages.campaignId, id));
 
     return { 
-      data: { ...campaign[0], images }, 
+      data: { ...campaign[0], images } as CampaignWithImages, 
       error: null 
     };
   } catch (error) {
@@ -105,7 +93,7 @@ export const createCampaign = async (data: CampaignInput) => {
         const supabase = await createClient();
         
         // Process each image
-        for (const image of data.images) {
+        for (const image of data.images as CampaignImageUpload[]) {
           // Upload to Supabase storage
           const { data: uploadData, error: uploadError } = await supabase
             .storage
@@ -178,7 +166,7 @@ export const updateCampaign = async (id: string, data: CampaignInput) => {
         const supabase = await createClient();
         
         // Process each new image
-        for (const image of data.images) {
+        for (const image of data.images as CampaignImageUpload[]) {
           // Upload to Supabase storage
           const { data: uploadData, error: uploadError } = await supabase
             .storage
