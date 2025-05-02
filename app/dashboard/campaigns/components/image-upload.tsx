@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import Image from 'next/image';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 
 interface ImageUploadProps {
   onImageUpload: (url: string, file: File) => void;
@@ -113,13 +115,28 @@ export default function ImageUpload({ onImageUpload, onError, disabled = false }
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
             {previews.map((preview, index) => (
               <div key={index} className="relative aspect-square overflow-hidden rounded-md border bg-muted">
-                <img
-                  src={preview.url}
-                  alt={`Preview ${preview.name}`}
-                  className="h-full w-full object-cover rounded"
-                />
-                <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-xs py-1 px-2 truncate">
-                  {preview.name}
+                <div className="mt-4 flex flex-wrap gap-3">
+                  {preview && (
+                    <div className="relative rounded-md border border-border overflow-hidden group">
+                      <Image 
+                        src={preview.url} 
+                        alt={preview.name}
+                        width={80}
+                        height={80}
+                        className="w-20 h-20 object-cover"
+                        unoptimized
+                      />
+                      <button
+                        onClick={() => {
+                          // Implement the logic to clear the preview
+                        }}
+                        className="absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                        type="button"
+                      >
+                        <XMarkIcon className="h-6 w-6 text-white" />
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}

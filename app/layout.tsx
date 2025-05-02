@@ -1,7 +1,7 @@
 import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
-import Link from "next/link";
 import Navbar from "@/components/navbar";
+import { Footer } from "@/components/footer";
 import "./globals.css";
 
 const defaultUrl = process.env.NETLIFY_URL
@@ -33,22 +33,13 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <main className="min-h-screen flex flex-col items-center">
-            <div className="flex-1 w-full flex flex-col gap-20 items-center">
-              <Navbar />
-              <div className="flex flex-col gap-20 max-w-5xl p-5">
-                {children}
-              </div>
+          <div className="min-h-screen flex flex-col">
+            <Navbar />
+            <main className="flex-1 w-full">
+              {children}
+            </main>
+            <Footer />
           </div>
-              <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-2 py-10">
-                <p>
-                  Powered by{" "}
-                  <Link href={"https://github.com/suspect-otw"}>
-                    suspect-otw
-                  </Link>
-                </p>
-              </footer>
-          </main>
         </ThemeProvider>
       </body>
     </html>

@@ -5,6 +5,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import CampaignTableActions from "./campaign-table-actions";
+import Image from "next/image";
 
 interface CampaignTableRowProps {
   campaign: Campaign;
@@ -38,10 +39,12 @@ export default function CampaignTableRow({
             <div className="animate-pulse bg-muted w-full h-full" />
           ) : thumbnail ? (
             <>
-              <img
+              <Image
                 src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/campaign_images/${thumbnail.filePath}`}
                 alt={campaign.campaignTitle}
                 className="w-full h-full object-cover"
+                fill
+                unoptimized
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = 'https://placehold.co/64x64/png?text=Error';
                 }}

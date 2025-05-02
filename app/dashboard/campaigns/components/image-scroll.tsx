@@ -4,6 +4,7 @@ import * as React from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { CampaignImage } from "@/types/campaign"
+import Image from "next/image"
 
 // Format file size to readable format
 const formatFileSize = (bytes: number): string => {
@@ -47,10 +48,13 @@ export function ImageScrollModal({ isOpen, onOpenChange, campaignTitle, images }
                 return (
                   <figure key={image.id} className="shrink-0">
                     <div className="overflow-hidden rounded-md">
-                      <img
+                      <Image
                         src={imageUrl}
                         alt={image.fileName || "Campaign image"}
                         className="aspect-[3/4] max-h-[500px] object-contain bg-muted"
+                        width={300}
+                        height={400}
+                        unoptimized
                         onError={(e) => {
                           (e.target as HTMLImageElement).src = 'https://placehold.co/300x400/png?text=Error';
                         }}

@@ -11,6 +11,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 // Maximum file size in bytes (5MB)
 export const MAX_IMAGE_SIZE_MB = 5;
@@ -126,10 +127,12 @@ export default function CampaignImageManager({
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {existingImages.map((image) => (
                 <div key={image.id} className="group relative aspect-square rounded-md overflow-hidden border bg-muted">
-                  <img
+                  <Image
                     src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/campaign_images/${image.filePath}`}
                     alt={image.fileName || "Campaign image"}
                     className="w-full h-full object-cover"
+                    fill
+                    unoptimized
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = 'https://placehold.co/300x300/png?text=Error';
                     }}
@@ -183,10 +186,12 @@ export default function CampaignImageManager({
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {images.map((image, index) => (
               <div key={index} className="group relative aspect-square rounded-md overflow-hidden border bg-muted">
-                <img
+                <Image
                   src={image.url}
                   alt={`New image ${index + 1}`}
                   className="w-full h-full object-cover"
+                  fill
+                  unoptimized
                 />
                 {/* Remove button for mobile */}
                 <Button 
