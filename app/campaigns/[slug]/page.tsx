@@ -5,7 +5,7 @@ import { getAllCampaigns } from "@/app/data/campaigns/get-all";
 import { getCampaignById } from "@/app/data/campaigns/get-single";
 import { Suspense } from "react";
 import { formatCurrency, formatDate, createSlug } from "@/lib/utils";
-import ClientImageGallery from "@/components/ClientImageGallery";
+import CampaignImageCarousel from "@/components/CampaignImageCarousel";
 
 // Generate metadata for the page
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -64,7 +64,7 @@ export default async function CampaignPage({ params }: PageProps) {
   const endDate = typeof campaign.endDate === 'string' ? new Date(campaign.endDate) : campaign.endDate;
 
   return (
-    <div className="w-full py-20">
+    <div className="w-full py-5">
       <div className="max-w-4xl mx-auto px-4">
         <Link 
           href="/campaigns"
@@ -101,9 +101,9 @@ export default async function CampaignPage({ params }: PageProps) {
             </h1>
           </div>
           
-          {/* Image gallery with modal */}
+          {/* Campaign image carousel */}
           <Suspense fallback={<div className="h-64 bg-muted rounded-xl animate-pulse"></div>}>
-            <ClientImageGallery 
+            <CampaignImageCarousel 
               campaignImages={campaign.images} 
               campaignTitle={campaign.campaignTitle} 
             />
