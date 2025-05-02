@@ -30,7 +30,7 @@ export default function CampaignApplyPage({
   
   if (!campaignTitle) {
     return (
-      <div className="w-full py-20 text-center">
+      <div className="w-full py-5 text-center">
         <div className="max-w-4xl mx-auto px-4">
           <h1 className="text-3xl font-bold mb-6">Campaign Not Found</h1>
           <p className="mb-8">The campaign you&apos;re looking for doesn&apos;t exist or has been removed.</p>
