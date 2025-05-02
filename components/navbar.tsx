@@ -4,6 +4,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 import Image from "next/image";
 import Logo from "@/app/logo.png";
 import Link from "next/link";
+import MobileDropdown from "./mobile-dropdown";
 
 export default function Navbar() {
   return (
@@ -24,9 +25,25 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
           <NavLinksAuth />
         </div>
-        <div className="flex items-center gap-4">
+        
+        {/* Desktop view - show components normally */}
+        <div className="hidden md:flex items-center gap-4">
           <HeaderAuth />
           <ThemeSwitcher />
+        </div>
+        
+        {/* Mobile view - show dropdown menu */}
+        <div className="flex md:hidden justify-center items-center">
+          <MobileDropdown>
+            <>
+              <div>
+                <HeaderAuth />
+              </div>
+              <div className="flex justify-end">
+                <ThemeSwitcher />
+              </div>
+            </>
+          </MobileDropdown>
         </div>
       </div>
     </nav>
