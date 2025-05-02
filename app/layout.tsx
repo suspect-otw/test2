@@ -33,7 +33,7 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <div className="min-h-screen flex flex-col">
+          <div className="min-h-screen flex flex-col justify-center items-center">
             <Navbar />
             <main className="flex-1 w-full">
               {children}
