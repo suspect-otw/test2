@@ -9,29 +9,38 @@ export default async function ResetPassword(props: {
 }) {
   const searchParams = await props.searchParams;
   return (
-    <form className="flex flex-col w-full max-w-md p-4 gap-2 [&>input]:mb-4">
-      <h1 className="text-2xl font-medium">Reset password</h1>
-      <p className="text-sm text-foreground/60">
-        Please enter your new password below.
-      </p>
-      <Label htmlFor="password">New password</Label>
-      <Input
-        type="password"
-        name="password"
-        placeholder="New password"
-        required
-      />
-      <Label htmlFor="confirmPassword">Confirm password</Label>
-      <Input
-        type="password"
-        name="confirmPassword"
-        placeholder="Confirm password"
-        required
-      />
-      <SubmitButton formAction={resetPasswordAction}>
-        Reset password
-      </SubmitButton>
-      <FormMessage message={searchParams} />
-    </form>
+    <div className="flex min-h-[calc(100vh-152px)] items-center justify-center w-full">
+      <form className="w-full max-w-md p-6 bg-card rounded-lg shadow-sm">
+        <div className="flex flex-col space-y-2 mb-6">
+          <h1 className="text-2xl font-medium">Reset password</h1>
+          <p className="text-sm text-foreground/60">
+            Please enter your new password below.
+          </p>
+        </div>
+        <div className="flex flex-col gap-3">
+          <Label htmlFor="password">New password</Label>
+          <Input
+            type="password"
+            name="password"
+            placeholder="New password"
+            required
+          />
+          <Label htmlFor="confirmPassword" className="mt-2">Confirm password</Label>
+          <Input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm password"
+            required
+          />
+          <SubmitButton 
+            className="mt-2" 
+            formAction={resetPasswordAction}
+          >
+            Reset password
+          </SubmitButton>
+          <FormMessage message={searchParams} />
+        </div>
+      </form>
+    </div>
   );
 }

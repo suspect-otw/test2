@@ -4,6 +4,10 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="max-w-7xl flex flex-col  items-start">{children}</div>
+    <div className="flex min-h-[calc(100vh-152px)] items-center justify-center w-full">
+      <div className="w-full max-w-md">
+        {children}
+      </div>
+    </div>
   );
 }
