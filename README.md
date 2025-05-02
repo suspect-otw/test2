@@ -85,7 +85,36 @@ If you wish to just develop locally and not deploy to Netlify, [follow the steps
 
    Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` can be found in [your Supabase project's API settings](https://app.supabase.com/project/_/settings/api)
 
-5. You can now run the Next.js local development server:
+5. Set up Supabase tables and storage:
+
+   - First, copy and paste the campaigns.sql file into the SQL editor in Supabase (file is located in the sql/campaigns.sql)
+   
+   - Second, run this code to create the storage bucket:
+     ```sql
+     -- IMPORTANT: First Create storage bucket for campaign images
+     INSERT INTO storage.buckets (id, name, public)
+     VALUES ('campaign_images', 'campaign_images', true);
+     ```
+   
+   - Third, run this code to create the campaign_images table:
+     ```sql
+     -- Second Create campaign_images table to track images with campaign foreign keys
+     CREATE TABLE "public"."campaign_images" (
+       "id" UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+       "campaign_id" UUID NOT NULL REFERENCES "public"."campaigns"("id") ON DELETE CASCADE,
+       "file_name" TEXT NOT NULL,
+       "file_path" TEXT NOT NULL,
+       "file_size" INTEGER NOT NULL,
+       "content_type" TEXT NOT NULL,
+       "created_at" TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
+     );
+     ```
+   
+   - Fourth, set up policies for the bucket by copying and pasting all code from sql/policies/storage.sql
+   
+   > **Note:** For public access to campaigns, consider adding read policies to the public.campaign and public.campaign_images tables.
+
+6. You can now run the Next.js local development server:
 
    ```bash
    npm install
@@ -94,4 +123,4 @@ If you wish to just develop locally and not deploy to Netlify, [follow the steps
 
    Its should now be running on [localhost:3000](http://localhost:3000/).
 
-6. I used default shadcn/ui style initialized. If you instead want other ui.shadcn styles, delete `components.json` and [re-install shadcn/ui](https://ui.shadcn.com/docs/installation/next)
+7. I used default shadcn/ui style initialized. If you instead want other ui.shadcn styles, delete `components.json` and [re-install shadcn/ui](https://ui.shadcn.com/docs/installation/next)
